@@ -20,4 +20,7 @@ from home import views
 
 urlpatterns = [
     path('', views.mainpage, name='home'),
+    path('login', views.mainpage, name='home'),
+    path('register', views.register, name='home'),
+    path('form', views.form, name='home'),
 ]
