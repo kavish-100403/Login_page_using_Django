@@ -12,7 +12,7 @@ from django.contrib.auth import login
 # Create your views here.
 
 def mainpage(request):
-    return render(request,'mainpage.html')
+    return(render(request,'mainpage.html'))
 def register(request):
     if request.method=="POST":
         name=request.POST.get('name')
@@ -23,7 +23,9 @@ def register(request):
 
         register=Register(name=name,email=email,username=username,password=password,phone=phone,date=datetime.today())
         register.save()
-    return render(request,'register.html')
+    return(render(request,'register.html'))
+
+
     # messages.success(request, "Profile details updated.")
     # return render(request,'register.html')
 def form(request):
