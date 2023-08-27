@@ -14,33 +14,35 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def mainpage(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
     return render(request,'mainpage.html')
 
-# def loginUser(request):
-#     if request.method=="POST":
-#         username=request.POST.get('username')
-#         password=request.POST.get('password')
-#         print(username,password)
-#         # print(Register.objects.filter(username=usern))
+def loginUser(request):
+    if request.method=="POST":
+        usernm=request.POST.get('usernm')
+        passwd=request.POST.get('passwd')
+        print(usernm,passwd)
+        # print(Register.objects.filter(username=usern))
 
-#         #To check if the user has entered correct credentials
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#              # A backend authenticated the credentials
-#             login(request, user)
-#             return redirect("/form")
-#         else:
-#     # No backend authenticated the credentials
-#             return render(request,"mainpage.html")
+        #To check if the user has entered correct credentials
+        user = authenticate(username=usernm, password=passwd)
+        if user is not None:
+             # A backend authenticated the credentials
+            login(request, user)
+            return redirect("/form")
+        else:
+    # No backend authenticated the credentials
+            return render(request,"register.html")
         
-#     return(render(request,'mainpage.html'))
+    return(render(request,'mainpage.html'))
 
-# def logoutUser(request):
-#     logout(request)
-#     return redirect("/login")
+def logoutUser(request):
+    logout(request)
+    return redirect("/login")
 
 
-def register(request):
+def register(request): 
     if request.method=="POST":
         name=request.POST.get('name')
         email=request.POST.get('email')
@@ -55,6 +57,7 @@ def register(request):
         #register will save the user credentials to the database
         register=Register(name=name,email=email,username=username,password=password,phone=phone,date=datetime.today())
         register.save()
+        return redirect('/login')
     return render(request,'register.html')
 
 
